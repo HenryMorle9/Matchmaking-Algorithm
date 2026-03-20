@@ -1,4 +1,4 @@
-package student;
+package com.matchmaking.algorithms;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

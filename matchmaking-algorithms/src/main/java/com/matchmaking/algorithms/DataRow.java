@@ -1,4 +1,4 @@
-package student;
+package com.matchmaking.algorithms;
 
 /**
  * Stores one weighted interaction from the input file.

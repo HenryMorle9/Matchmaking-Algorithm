@@ -3,6 +3,24 @@ bin/
 target/
 
 .vscode/
+.idea/
+.project
+.classpath
+.settings/
+
+.DS_Store
+
+# AI build tools
+CLAUDE.md
+Agents.md
+agents/
+.claude/
+
+*.class
+bin/
+target/
+
+.vscode/
 
 .idea/
 .project

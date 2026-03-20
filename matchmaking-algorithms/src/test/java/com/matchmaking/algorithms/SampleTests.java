@@ -1,4 +1,4 @@
-package student;
+package com.matchmaking.algorithms;
 
 import static org.junit.Assert.*;
 

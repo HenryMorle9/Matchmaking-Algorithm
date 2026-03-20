@@ -95,7 +95,7 @@ Both local search variants use add/remove moves: at each step, a single player i
 - [ ] **Simulated Annealing** — escapes local optima by occasionally accepting worse moves
 - [ ] **Genetic Algorithm** — population-based search, naturally parallelisable
 - [ ] **Bitmasking** — represent teams as integer bitmasks for faster set operations
-- [ ] **ML-guided initial team** *(mega-stretch)* — train a model on optimal splits to predict a warm start for local search
+- [ ] **Machine-Learning-guided initial team** *(mega-stretch)* — train a model on optimal splits to predict a warm start for local search
 
 ---
 

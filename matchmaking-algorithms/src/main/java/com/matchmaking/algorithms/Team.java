@@ -1,4 +1,4 @@
-package student;
+package com.matchmaking.algorithms;
 
 import java.util.Iterator;
 import java.util.TreeSet;
