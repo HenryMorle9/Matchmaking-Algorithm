@@ -46,6 +46,7 @@ export default function Compare() {
     ? Math.min(...results.map((r) => r.runtimeMs))
     : 0;
 
+
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold text-gray-900">Algorithm Comparison</h1>
@@ -115,7 +116,7 @@ export default function Compare() {
                     [{r.team.join(", ")}]
                   </td>
                   <td className="px-4 py-3 font-bold text-gray-900">
-                    {r.score}
+                    {Math.round(r.score * 100) / 100}
                     {r.score === bestScore && (
                       <span className="ml-2 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
                         Most Accurate
@@ -136,6 +137,7 @@ export default function Compare() {
           </table>
         </div>
       )}
+
     </div>
   );
 }
