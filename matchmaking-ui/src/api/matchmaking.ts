@@ -28,5 +28,6 @@ export async function compareAlgorithms(request: MatchmakingRequest, signal?: Ab
     body: JSON.stringify(request),
     signal,
   });
-  return res.json();
+  const data = await res.json();
+  return data.results;
 }

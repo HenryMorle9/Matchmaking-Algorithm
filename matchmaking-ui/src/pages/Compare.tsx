@@ -38,9 +38,12 @@ export default function Compare() {
     }
   }
 
-  // Find the best score to highlight the winner
+  // Find the best score and fastest runtime
   const bestScore = results.length > 0
     ? Math.max(...results.map((r) => r.score))
+    : 0;
+  const fastestTime = results.length > 0
+    ? Math.min(...results.map((r) => r.runtimeMs))
     : 0;
 
   return (
@@ -103,27 +106,30 @@ export default function Compare() {
               {results.map((r) => (
                 <tr
                   key={r.algorithm}
-                  className={
-                    r.score === bestScore
-                      ? "bg-green-50 border-b border-green-100"
-                      : "border-b border-gray-100"
-                  }
+                  className="border-b border-gray-100"
                 >
                   <td className="px-4 py-3 font-medium text-gray-900">
                     {ALGORITHM_LABELS[r.algorithm] ?? r.algorithm}
-                    {r.score === bestScore && (
-                      <span className="ml-2 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                        Best
-                      </span>
-                    )}
                   </td>
                   <td className="px-4 py-3 text-gray-700">
                     [{r.team.join(", ")}]
                   </td>
                   <td className="px-4 py-3 font-bold text-gray-900">
                     {r.score}
+                    {r.score === bestScore && (
+                      <span className="ml-2 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                        Most Accurate
+                      </span>
+                    )}
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{r.runtimeMs} ms</td>
+                  <td className="px-4 py-3 text-gray-700">
+                    {r.runtimeMs} ms
+                    {r.runtimeMs === fastestTime && (
+                      <span className="ml-2 rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                        Fastest
+                      </span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
