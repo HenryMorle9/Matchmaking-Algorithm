@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { runAlgorithm } from "../api/matchmaking";
 import type { MatchmakingResult } from "../types/matchmaking";
 
@@ -15,12 +15,18 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // AbortController lets us cancel an in-flight fetch request
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   async function handleRun() {
     setLoading(true);
     setError("");
     setResult(null);
 
-    // Parse initial team — "0, 5" becomes [0, 5], empty string becomes []
+    // Create a new AbortController for this request
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     const team = initialTeam
       .split(",")
       .map((s) => s.trim())
@@ -28,13 +34,22 @@ export default function Dashboard() {
       .map(Number);
 
     try {
-      const res = await runAlgorithm({ algorithm, initialTeam: team });
+      const res = await runAlgorithm({ algorithm, initialTeam: team }, controller.signal);
       setResult(res);
-    } catch {
-      setError("Failed to run algorithm. Is the API running? Did you load a graph first?");
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setError("Request cancelled.");
+      } else {
+        setError("Failed to run algorithm. Is the API running? Did you load a graph first?");
+      }
     } finally {
       setLoading(false);
+      abortControllerRef.current = null;
     }
+  }
+
+  function handleCancel() {
+    abortControllerRef.current?.abort();
   }
 
   return (
@@ -84,6 +99,14 @@ export default function Dashboard() {
         >
           {loading ? "Running..." : "Run"}
         </button>
+        {loading && (
+          <button
+            onClick={handleCancel}
+            className="rounded border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+          >
+            Cancel
+          </button>
+        )}
       </div>
 
       {/* Loading bar */}

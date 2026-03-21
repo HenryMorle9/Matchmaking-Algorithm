@@ -75,9 +75,14 @@ export default function Compare() {
       </div>
 
       {loading && (
-        <p className="mt-4 text-sm text-gray-500">
-          Running all three algorithms — exhaustive search may take a while on large graphs...
-        </p>
+        <div className="mt-4">
+          <p className="text-sm text-gray-500 mb-2">
+            Running all three algorithms — exhaustive search may take a while on large graphs...
+          </p>
+          <div className="h-2 w-full rounded-full bg-gray-200 overflow-hidden">
+            <div className="h-full rounded-full bg-blue-600 animate-pulse w-full" />
+          </div>
+        </div>
       )}
 
       {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
