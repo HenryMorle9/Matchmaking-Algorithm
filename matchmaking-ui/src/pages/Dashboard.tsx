@@ -53,9 +53,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-900">Matchmaking Dashboard</h1>
-      <p className="mt-2 text-gray-600">
+    <div className="theme-page">
+      <h1 className="theme-title">Matchmaking Dashboard</h1>
+      <p className="theme-subtitle mt-3">
         Pick an algorithm, set an optional starting team, and run it against
         your loaded graph.
       </p>
@@ -63,13 +63,13 @@ export default function Dashboard() {
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="theme-label block">
             Algorithm
           </label>
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value)}
-            className="mt-1 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            className="theme-input mt-2 rounded-lg px-3 py-2 text-sm"
           >
             {ALGORITHMS.map((a) => (
               <option key={a.value} value={a.value}>
@@ -80,7 +80,7 @@ export default function Dashboard() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="theme-label block">
             Initial Team (optional)
           </label>
           <input
@@ -88,21 +88,21 @@ export default function Dashboard() {
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
             placeholder="e.g. 0, 5"
-            className="mt-1 w-40 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
           />
         </div>
 
         <button
           onClick={handleRun}
           disabled={loading}
-          className="rounded bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="theme-btn-primary px-6 py-2 text-sm disabled:opacity-50"
         >
           {loading ? "Running..." : "Run"}
         </button>
         {loading && (
           <button
             onClick={handleCancel}
-            className="rounded border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+            className="theme-btn-danger px-4 py-2 text-sm"
           >
             Cancel
           </button>
@@ -112,40 +112,40 @@ export default function Dashboard() {
       {/* Loading bar */}
       {loading && (
         <div className="mt-4">
-          <p className="text-sm text-gray-500 mb-2">
+          <p className="theme-note mb-2 text-sm">
             Running algorithm — exhaustive search may take a while on large graphs...
           </p>
-          <div className="h-2 w-full rounded-full bg-gray-200 overflow-hidden">
-            <div className="h-full rounded-full bg-blue-600 animate-pulse w-full" />
+          <div className="theme-loading-track h-2 w-full overflow-hidden rounded-full">
+            <div className="theme-loading-fill h-full w-full animate-pulse rounded-full" />
           </div>
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <p className="mt-4 text-sm text-red-600">{error}</p>
+        <p className="theme-error mt-4 text-sm">{error}</p>
       )}
 
       {/* Result card */}
       {result && (
-        <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="theme-panel mt-6 rounded-xl p-6">
+          <h2 className="theme-section-title">
             {ALGORITHMS.find((a) => a.value === result.algorithm)?.label ?? result.algorithm}
           </h2>
           <div className="mt-4 grid grid-cols-3 gap-4">
             <div>
-              <p className="text-sm text-gray-500">Team</p>
-              <p className="text-xl font-bold text-gray-900">
+              <p className="theme-label">Team</p>
+              <p className="theme-mono mt-2 text-xl font-bold text-white">
                 [{result.team.join(", ")}]
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Score</p>
-              <p className="text-xl font-bold text-gray-900">{result.score}</p>
+              <p className="theme-label">Score</p>
+              <p className="mt-2 text-xl font-bold text-white">{result.score}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Runtime</p>
-              <p className="text-xl font-bold text-gray-900">
+              <p className="theme-label">Runtime</p>
+              <p className="theme-mono mt-2 text-xl font-bold text-white">
                 {result.runtimeMs} ms
               </p>
             </div>

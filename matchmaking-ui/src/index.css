@@ -1,1 +1,303 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+body {
+  min-width: 320px;
+}
+
+.broadcast-theme {
+  min-height: 100vh;
+  color: #edf4ff;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 24%),
+    radial-gradient(circle at top right, rgba(248, 113, 113, 0.12), transparent 22%),
+    linear-gradient(180deg, #04070c 0%, #0c1320 50%, #070b12 100%);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.broadcast-theme .theme-nav {
+  border-bottom: 1px solid rgba(110, 136, 174, 0.18);
+  background:
+    linear-gradient(180deg, rgba(7, 11, 18, 0.94), rgba(7, 11, 18, 0.86));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+
+.broadcast-theme .theme-nav-inner {
+  position: relative;
+}
+
+.broadcast-theme .theme-brand {
+  color: #f8fbff;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.65rem 0.95rem;
+  color: #9eb0cb;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.broadcast-theme .theme-nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-1px);
+}
+
+.broadcast-theme .theme-nav-link--active {
+  color: #081018;
+  background: linear-gradient(135deg, #38bdf8, #67e8f9);
+  box-shadow: 0 10px 24px rgba(56, 189, 248, 0.28);
+}
+
+.broadcast-theme .theme-main {
+  padding-bottom: 3rem;
+}
+
+.broadcast-theme .theme-page {
+  padding: 2.25rem 2rem 3rem;
+}
+
+.broadcast-theme .theme-title {
+  color: #ffffff;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-subtitle {
+  max-width: 48rem;
+  color: #9fb1cc;
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.broadcast-theme .theme-panel {
+  border: 1px solid rgba(114, 140, 180, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%),
+    linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(9, 14, 24, 0.94));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+}
+
+.broadcast-theme .theme-panel-subtle {
+  border: 1px solid rgba(114, 140, 180, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 20%),
+    linear-gradient(180deg, rgba(13, 18, 30, 0.92), rgba(8, 12, 21, 0.94));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+.broadcast-theme .theme-card-header {
+  border-bottom: 1px solid rgba(114, 140, 180, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.broadcast-theme .theme-divider {
+  border-color: rgba(114, 140, 180, 0.2);
+}
+
+.broadcast-theme .theme-section-title {
+  color: #d8e4f6;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-label {
+  color: #c8d5e7;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-input {
+  border: 1px solid rgba(114, 140, 180, 0.2);
+  background: rgba(4, 8, 15, 0.62);
+  color: #f6f9ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.broadcast-theme .theme-input::placeholder {
+  color: #8d9eb8;
+}
+
+.broadcast-theme .theme-input:focus {
+  border-color: rgba(56, 189, 248, 0.52);
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(56, 189, 248, 0.16),
+    0 12px 30px rgba(56, 189, 248, 0.08);
+}
+
+.broadcast-theme .theme-btn-primary,
+.broadcast-theme .theme-btn-secondary,
+.broadcast-theme .theme-btn-accent,
+.broadcast-theme .theme-btn-danger {
+  border-radius: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition:
+    transform 150ms ease,
+    filter 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease;
+}
+
+.broadcast-theme .theme-btn-primary:hover,
+.broadcast-theme .theme-btn-secondary:hover,
+.broadcast-theme .theme-btn-accent:hover,
+.broadcast-theme .theme-btn-danger:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.broadcast-theme .theme-btn-primary {
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: #f7fbff;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.28);
+}
+
+.broadcast-theme .theme-btn-secondary {
+  border: 1px solid rgba(114, 140, 180, 0.22);
+  background: rgba(255, 255, 255, 0.03);
+  color: #edf4ff;
+}
+
+.broadcast-theme .theme-btn-accent {
+  border: 1px solid rgba(245, 183, 0, 0.26);
+  background: linear-gradient(135deg, #f59e0b, #facc15);
+  color: #1a1304;
+  box-shadow: 0 14px 28px rgba(245, 158, 11, 0.22);
+}
+
+.broadcast-theme .theme-btn-danger {
+  border: 1px solid rgba(248, 113, 113, 0.24);
+  background: rgba(248, 113, 113, 0.12);
+  color: #ffd5da;
+}
+
+.broadcast-theme .theme-status {
+  color: #c1cee0;
+}
+
+.broadcast-theme .theme-note {
+  color: #94a7c3;
+}
+
+.broadcast-theme .theme-error {
+  color: #fda4af;
+}
+
+.broadcast-theme .theme-mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.broadcast-theme .theme-loading-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.broadcast-theme .theme-loading-fill {
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.28);
+}
+
+.broadcast-theme .theme-table {
+  color: #d9e3f2;
+}
+
+.broadcast-theme .theme-table thead {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.broadcast-theme .theme-table tbody tr {
+  border-color: rgba(114, 140, 180, 0.14);
+}
+
+.broadcast-theme .theme-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.broadcast-theme .theme-table tbody tr.theme-row-active {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+.broadcast-theme .theme-table th {
+  color: #8fa2be;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-chip-success {
+  border: 1px solid rgba(134, 239, 172, 0.22);
+  background: rgba(134, 239, 172, 0.12);
+  color: #bbf7d0;
+}
+
+.broadcast-theme .theme-chip-info {
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: rgba(125, 211, 252, 0.12);
+  color: #bae6fd;
+}
+
+.broadcast-theme .theme-chip-success,
+.broadcast-theme .theme-chip-info {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.18rem 0.58rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.broadcast-theme .theme-svg-panel {
+  background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.08), transparent 26%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(8, 13, 22, 0.98));
+}
+
+.broadcast-theme .theme-legend {
+  color: #9db0ca;
+}
+
+.broadcast-theme .theme-info-banner {
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbd38d;
+}
+
+@media (max-width: 640px) {
+  .broadcast-theme .theme-page {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .broadcast-theme .theme-brand {
+    font-size: 1.6rem;
+  }
+}

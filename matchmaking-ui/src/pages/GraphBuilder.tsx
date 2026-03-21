@@ -17,6 +17,14 @@ export default function GraphBuilder() {
   // Player count for random generation
   const [playerCount, setPlayerCount] = useState("7");
 
+  const statusClass = status
+    ? status.toLowerCase().includes("failed")
+      || status.toLowerCase().includes("please")
+      || status.toLowerCase().includes("add at least one")
+      ? "theme-error"
+      : "theme-status"
+    : "";
+
   function handleAddEdge() {
     // Parse inputs to numbers
     const edge: Edge = {
@@ -78,22 +86,22 @@ export default function GraphBuilder() {
   }
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="theme-page space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Graph Builder</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="theme-title">Graph Builder</h1>
+        <p className="theme-subtitle mt-3">
           Add edges between players with compatibility scores, then load the graph
           into the API.
         </p>
       </div>
 
       {/* Edge input form */}
-      <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-        <h2 className="text-sm font-semibold text-gray-900 mb-3">Add Edges</h2>
+      <div className="theme-panel rounded-xl p-5">
+        <h2 className="theme-section-title mb-3">Add Edges</h2>
         <div className="flex gap-3 items-end">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="theme-label block">
               Player 1
             </label>
             <input
@@ -101,11 +109,11 @@ export default function GraphBuilder() {
               value={p1}
               onChange={(e) => setP1(e.target.value)}
               placeholder="0"
-              className="mt-1 w-24 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="theme-input mt-2 w-24 rounded-lg px-3 py-2 text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="theme-label block">
               Player 2
             </label>
             <input
@@ -113,11 +121,11 @@ export default function GraphBuilder() {
               value={p2}
               onChange={(e) => setP2(e.target.value)}
               placeholder="1"
-              className="mt-1 w-24 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="theme-input mt-2 w-24 rounded-lg px-3 py-2 text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="theme-label block">
               Score
             </label>
             <input
@@ -126,28 +134,28 @@ export default function GraphBuilder() {
               value={score}
               onChange={(e) => setScore(e.target.value)}
               placeholder="2.0"
-              className="mt-1 w-24 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              className="theme-input mt-2 w-24 rounded-lg px-3 py-2 text-sm"
             />
           </div>
           <button
             onClick={handleAddEdge}
-            className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="theme-btn-primary px-4 py-2 text-sm"
           >
             Add Edge
           </button>
-          <div className="border-l border-gray-300 pl-3 flex gap-2 items-end">
+          <div className="theme-divider flex gap-2 items-end border-l pl-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Players</label>
+              <label className="theme-label block">Players</label>
               <input
                 type="number"
                 value={playerCount}
                 onChange={(e) => setPlayerCount(e.target.value)}
-                className="mt-1 w-20 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                className="theme-input mt-2 w-20 rounded-lg px-3 py-2 text-sm"
               />
             </div>
             <button
               onClick={handleGenerateRandom}
-              className="rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="theme-btn-secondary px-4 py-2 text-sm"
             >
               Generate Random
             </button>
@@ -182,32 +190,32 @@ export default function GraphBuilder() {
         }
 
         return (
-          <div className="mt-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-            <h3 className="text-sm font-semibold text-gray-900">
+          <div className="theme-panel-subtle mt-4 rounded-xl p-4">
+            <h3 className="theme-section-title">
               Estimated Performance ({uniquePlayers} players)
             </h3>
-            <table className="mt-2 w-full text-sm">
+            <table className="theme-table mt-3 w-full text-sm">
               <thead>
-                <tr className="text-left text-gray-500">
-                  <th className="py-1 font-medium">Algorithm</th>
-                  <th className="py-1 font-medium">Subsets</th>
-                  <th className="py-1 font-medium">Estimate</th>
+                <tr className="text-left">
+                  <th className="py-2">Algorithm</th>
+                  <th className="py-2">Subsets</th>
+                  <th className="py-2">Estimate</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-t border-gray-100">
+                <tr className="theme-divider border-t">
                   <td className="py-1">Local Search (First)</td>
-                  <td className="py-1 text-gray-500">O(n²)</td>
+                  <td className="theme-note py-1">O(n²)</td>
                   <td className="py-1 text-green-600 font-medium">{"< 1 second"}</td>
                 </tr>
-                <tr className="border-t border-gray-100">
+                <tr className="theme-divider border-t">
                   <td className="py-1">Local Search (Best)</td>
-                  <td className="py-1 text-gray-500">O(n²)</td>
+                  <td className="theme-note py-1">O(n²)</td>
                   <td className="py-1 text-green-600 font-medium">{"< 1 second"}</td>
                 </tr>
-                <tr className="border-t border-gray-100">
+                <tr className="theme-divider border-t">
                   <td className="py-1">Guaranteed Best (Exhaustive)</td>
-                  <td className="py-1 text-gray-500">
+                  <td className="theme-note py-1">
                     2<sup>{uniquePlayers}</sup> = {totalSubsets.toLocaleString()}
                   </td>
                   <td className={`py-1 font-medium ${timeColor(estimatedSeconds)}`}>
@@ -225,43 +233,43 @@ export default function GraphBuilder() {
         <div className="flex items-center gap-4">
           <button
             onClick={handleLoadGraph}
-            className="rounded bg-green-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-green-700"
+            className="theme-btn-accent px-6 py-2.5 text-sm"
           >
             Load Graph ({edges.length} edges)
           </button>
           {status && (
-            <p className="text-sm font-medium text-gray-700">{status}</p>
+            <p className={`text-sm font-medium ${statusClass}`}>{status}</p>
           )}
         </div>
       )}
 
       {/* Edge list table */}
       {edges.length > 0 && (
-        <div className="rounded-lg border border-gray-200 bg-white shadow-sm overflow-hidden">
-          <div className="px-5 py-3 border-b border-gray-200 bg-gray-50">
-            <h2 className="text-sm font-semibold text-gray-900">
+        <div className="theme-panel overflow-hidden rounded-xl">
+          <div className="theme-card-header theme-divider border-b px-5 py-3">
+            <h2 className="theme-section-title">
               Edges ({edges.length})
             </h2>
           </div>
-          <table className="w-full text-left text-sm">
+          <table className="theme-table w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-gray-200 text-gray-500 bg-gray-50">
-                <th className="px-5 py-2 font-medium">Player 1</th>
-                <th className="px-5 py-2 font-medium">Player 2</th>
-                <th className="px-5 py-2 font-medium">Score</th>
-                <th className="px-5 py-2 font-medium"></th>
+              <tr className="theme-card-header theme-divider border-b">
+                <th className="px-5 py-3">Player 1</th>
+                <th className="px-5 py-3">Player 2</th>
+                <th className="px-5 py-3">Score</th>
+                <th className="px-5 py-3"></th>
               </tr>
             </thead>
             <tbody>
               {edges.map((edge, i) => (
-                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50">
+                <tr key={i} className="theme-divider border-b">
                   <td className="px-5 py-2">{edge.p1}</td>
                   <td className="px-5 py-2">{edge.p2}</td>
-                  <td className="px-5 py-2">{edge.score}</td>
+                  <td className="theme-mono px-5 py-2">{edge.score}</td>
                   <td className="px-5 py-2">
                     <button
                       onClick={() => handleRemoveEdge(i)}
-                      className="text-red-500 hover:text-red-700 text-xs"
+                      className="theme-btn-danger px-3 py-1.5 text-xs"
                     >
                       Remove
                     </button>

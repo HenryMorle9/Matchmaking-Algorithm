@@ -116,20 +116,20 @@ export default function Visualise() {
     : {};
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-900">Step-by-Step Visualisation</h1>
-      <p className="mt-2 text-gray-600">
+    <div className="theme-page">
+      <h1 className="theme-title">Step-by-Step Visualisation</h1>
+      <p className="theme-subtitle mt-3">
         Watch how local search algorithms explore team splits move by move.
       </p>
 
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end flex-wrap">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Algorithm</label>
+          <label className="theme-label block">Algorithm</label>
           <select
             value={algorithm}
             onChange={(e) => { setAlgorithm(e.target.value); setResult(null); setCurrentStep(0); setPlaying(false); }}
-            className="mt-1 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            className="theme-input mt-2 rounded-lg px-3 py-2 text-sm"
           >
             {ALGORITHM_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -137,7 +137,7 @@ export default function Visualise() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="theme-label block">
             Initial Team
           </label>
           <input
@@ -145,25 +145,25 @@ export default function Visualise() {
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
             placeholder="e.g. 0, 5"
-            className="mt-1 w-40 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
           />
         </div>
         <button
           onClick={handleRun}
           disabled={loading}
-          className="rounded bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="theme-btn-primary px-6 py-2 text-sm disabled:opacity-50"
         >
           {loading ? "Running..." : "Run"}
         </button>
       </div>
 
-      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="theme-error mt-4 text-sm">{error}</p>}
 
       {/* Graph + Step info */}
       {result && step && (
         <div className="mt-6 flex gap-8 flex-wrap">
           {/* SVG Graph */}
-          <div className="rounded-lg border border-gray-200 bg-white shadow-sm p-4">
+          <div className="theme-panel theme-svg-panel rounded-xl p-4">
             <svg width={700} height={600} className="block">
               {/* Edges — faint by default, highlighted if crossing teams */}
               {edges.map((edge, i) => {
@@ -190,9 +190,9 @@ export default function Visualise() {
                   <g key={i}>
                     <line
                       x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
-                      stroke={involvesMovedPlayer ? "#8b5cf6" : isCrossTeam ? "#93c5fd" : "#e5e7eb"}
+                      stroke={involvesMovedPlayer ? "#f59e0b" : isCrossTeam ? "#38bdf8" : "#516179"}
                       strokeWidth={involvesMovedPlayer ? 2.5 : isCrossTeam ? 1.5 : 0.5}
-                      opacity={involvesMovedPlayer ? 0.9 : isCrossTeam ? 0.5 : 0.15}
+                      opacity={involvesMovedPlayer ? 0.95 : isCrossTeam ? 0.6 : 0.2}
                       className="transition-all duration-500"
                     />
                     {involvesMovedPlayer && (
@@ -202,7 +202,7 @@ export default function Visualise() {
                         dominantBaseline="middle"
                         fontSize={11}
                         fontWeight="bold"
-                        className="fill-violet-600 select-none"
+                        className="select-none fill-amber-300"
                       >
                         {edge.score}
                       </text>
@@ -225,7 +225,7 @@ export default function Visualise() {
                     {isMovedNode && (
                       <circle
                         cx={pos.x} cy={pos.y} r={28}
-                        fill="none" stroke="#8b5cf6" strokeWidth={3}
+                        fill="none" stroke="#f59e0b" strokeWidth={3}
                         className="transition-all duration-500"
                       />
                     )}
@@ -250,7 +250,7 @@ export default function Visualise() {
             </svg>
 
             {/* Legend */}
-            <div className="flex gap-4 mt-2 justify-center text-sm text-gray-600 flex-wrap">
+            <div className="theme-legend mt-2 flex flex-wrap justify-center gap-4 text-sm">
               <span className="flex items-center gap-1">
                 <span className="inline-block w-3 h-3 rounded-full bg-blue-500" /> Team 1
               </span>
@@ -258,13 +258,13 @@ export default function Visualise() {
                 <span className="inline-block w-3 h-3 rounded-full bg-red-500" /> Team 2
               </span>
               <span className="flex items-center gap-1">
-                <span className="inline-block w-3 h-3 rounded-full bg-violet-500" /> Current move
+                <span className="inline-block h-3 w-3 rounded-full bg-amber-400" /> Current move
               </span>
             </div>
 
             {/* Algorithm explanation for guaranteed */}
             {result?.algorithm === "guaranteedBestTeam" && (
-              <div className="mt-3 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+              <div className="theme-info-banner mt-3 rounded-lg px-4 py-3 text-sm">
                 <p className="font-semibold">Why only 2 steps?</p>
                 <p className="mt-1">
                   The Guaranteed Best algorithm doesn't make moves like local search.
@@ -285,7 +285,7 @@ export default function Visualise() {
               <button
                 onClick={() => setCurrentStep(0)}
                 disabled={currentStep === 0}
-                className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 disabled:opacity-40"
+                className="theme-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
                 title="Reset"
               >
                 ⏮
@@ -293,21 +293,21 @@ export default function Visualise() {
               <button
                 onClick={() => setCurrentStep((s) => Math.max(0, s - 1))}
                 disabled={currentStep === 0}
-                className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 disabled:opacity-40"
+                className="theme-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
                 title="Previous step"
               >
                 ◀
               </button>
               <button
                 onClick={() => setPlaying(!playing)}
-                className="rounded bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+                className="theme-btn-primary px-4 py-1.5 text-sm"
               >
                 {playing ? "⏸ Pause" : "▶ Play"}
               </button>
               <button
                 onClick={() => setCurrentStep((s) => Math.min(result.steps.length - 1, s + 1))}
                 disabled={currentStep >= result.steps.length - 1}
-                className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 disabled:opacity-40"
+                className="theme-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
                 title="Next step"
               >
                 ▶
@@ -315,7 +315,7 @@ export default function Visualise() {
               <button
                 onClick={() => setCurrentStep(result.steps.length - 1)}
                 disabled={currentStep >= result.steps.length - 1}
-                className="rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 disabled:opacity-40"
+                className="theme-btn-secondary px-3 py-1.5 text-sm disabled:opacity-40"
                 title="Skip to end"
               >
                 ⏭
@@ -324,50 +324,50 @@ export default function Visualise() {
 
             {/* Step progress bar */}
             <div className="mb-4">
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <div className="theme-note mb-1 flex justify-between text-xs">
                 <span>Step {currentStep} of {result.steps.length - 1}</span>
                 <span>{result.runtimeMs} ms total</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-gray-200 overflow-hidden">
+              <div className="theme-loading-track h-2 w-full overflow-hidden rounded-full">
                 <div
-                  className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                  className="theme-loading-fill h-full rounded-full transition-all duration-300"
                   style={{ width: `${result.steps.length > 1 ? (currentStep / (result.steps.length - 1)) * 100 : 100}%` }}
                 />
               </div>
             </div>
 
             {/* Current step details */}
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-3">
+            <div className="theme-panel-subtle space-y-3 rounded-xl p-4">
               <div>
-                <span className="text-sm font-medium text-gray-500">Action</span>
-                <p className="text-lg font-semibold text-gray-900">{step.action}</p>
+                <span className="theme-label">Action</span>
+                <p className="mt-2 text-lg font-semibold text-white">{step.action}</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <span className="text-sm font-medium text-gray-500">Team 1 (Blue)</span>
-                  <p className="text-sm text-gray-900 font-mono">[{step.team.join(", ")}]</p>
+                  <span className="theme-label">Team 1 (Blue)</span>
+                  <p className="theme-mono mt-2 text-sm text-sky-100">[{step.team.join(", ")}]</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-gray-500">Team 2 (Red)</span>
-                  <p className="text-sm text-gray-900 font-mono">[{step.opposingTeam.join(", ")}]</p>
+                  <span className="theme-label">Team 2 (Red)</span>
+                  <p className="theme-mono mt-2 text-sm text-rose-100">[{step.opposingTeam.join(", ")}]</p>
                 </div>
               </div>
               <div>
-                <span className="text-sm font-medium text-gray-500">Score</span>
-                <p className="text-2xl font-bold text-gray-900">
+                <span className="theme-label">Score</span>
+                <p className="mt-2 text-2xl font-bold text-white">
                   {Math.round(step.score * 100) / 100}
                 </p>
               </div>
             </div>
 
             {/* Step history */}
-            <div className="mt-4 rounded-lg border border-gray-200 overflow-hidden">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
+            <div className="theme-panel mt-4 overflow-hidden rounded-xl">
+              <table className="theme-table w-full text-sm">
+                <thead className="theme-card-header">
                   <tr>
-                    <th className="px-3 py-2 text-left font-medium text-gray-500">Step</th>
-                    <th className="px-3 py-2 text-left font-medium text-gray-500">Action</th>
-                    <th className="px-3 py-2 text-right font-medium text-gray-500">Score</th>
+                    <th className="px-3 py-2 text-left">Step</th>
+                    <th className="px-3 py-2 text-left">Action</th>
+                    <th className="px-3 py-2 text-right">Score</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -375,13 +375,13 @@ export default function Visualise() {
                     <tr
                       key={i}
                       onClick={() => { setCurrentStep(i); setPlaying(false); }}
-                      className={`border-t border-gray-100 cursor-pointer hover:bg-gray-50 ${
-                        i === currentStep ? "bg-blue-50" : ""
+                      className={`theme-divider cursor-pointer border-t ${
+                        i === currentStep ? "theme-row-active" : ""
                       }`}
                     >
-                      <td className="px-3 py-2 text-gray-700">{i}</td>
-                      <td className="px-3 py-2 text-gray-700">{s.action}</td>
-                      <td className="px-3 py-2 text-right font-mono text-gray-900">
+                      <td className="theme-note px-3 py-2">{i}</td>
+                      <td className="px-3 py-2">{s.action}</td>
+                      <td className="theme-mono px-3 py-2 text-right text-white">
                         {Math.round(s.score * 100) / 100}
                       </td>
                     </tr>

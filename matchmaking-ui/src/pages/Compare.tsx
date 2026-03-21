@@ -48,9 +48,9 @@ export default function Compare() {
 
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-900">Algorithm Comparison</h1>
-      <p className="mt-2 text-gray-600">
+    <div className="theme-page">
+      <h1 className="theme-title">Algorithm Comparison</h1>
+      <p className="theme-subtitle mt-3">
         Run all three algorithms on the same graph and compare results side by
         side.
       </p>
@@ -58,7 +58,7 @@ export default function Compare() {
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="theme-label block">
             Initial Team (optional)
           </label>
           <input
@@ -66,13 +66,13 @@ export default function Compare() {
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
             placeholder="e.g. 0, 5"
-            className="mt-1 w-40 rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
           />
         </div>
         <button
           onClick={handleCompare}
           disabled={loading}
-          className="rounded bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="theme-btn-primary px-6 py-2 text-sm disabled:opacity-50"
         >
           {loading ? "Comparing..." : "Compare All"}
         </button>
@@ -80,53 +80,53 @@ export default function Compare() {
 
       {loading && (
         <div className="mt-4">
-          <p className="text-sm text-gray-500 mb-2">
+          <p className="theme-note mb-2 text-sm">
             Running all three algorithms — exhaustive search may take a while on large graphs...
           </p>
-          <div className="h-2 w-full rounded-full bg-gray-200 overflow-hidden">
-            <div className="h-full rounded-full bg-blue-600 animate-pulse w-full" />
+          <div className="theme-loading-track h-2 w-full overflow-hidden rounded-full">
+            <div className="theme-loading-fill h-full w-full animate-pulse rounded-full" />
           </div>
         </div>
       )}
 
-      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="theme-error mt-4 text-sm">{error}</p>}
 
       {/* Results table */}
       {results.length > 0 && (
-        <div className="mt-6 overflow-hidden rounded-lg border border-gray-200 shadow-sm">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-gray-50">
+        <div className="theme-panel mt-6 overflow-hidden rounded-xl">
+          <table className="theme-table w-full text-left text-sm">
+            <thead className="theme-card-header">
               <tr>
-                <th className="px-4 py-3 font-medium text-gray-500">Algorithm</th>
-                <th className="px-4 py-3 font-medium text-gray-500">Team</th>
-                <th className="px-4 py-3 font-medium text-gray-500">Score</th>
-                <th className="px-4 py-3 font-medium text-gray-500">Runtime</th>
+                <th className="px-4 py-3">Algorithm</th>
+                <th className="px-4 py-3">Team</th>
+                <th className="px-4 py-3">Score</th>
+                <th className="px-4 py-3">Runtime</th>
               </tr>
             </thead>
             <tbody>
               {results.map((r) => (
                 <tr
                   key={r.algorithm}
-                  className="border-b border-gray-100"
+                  className="theme-divider border-b"
                 >
-                  <td className="px-4 py-3 font-medium text-gray-900">
+                  <td className="px-4 py-3 font-medium text-white">
                     {ALGORITHM_LABELS[r.algorithm] ?? r.algorithm}
                   </td>
-                  <td className="px-4 py-3 text-gray-700">
+                  <td className="theme-mono px-4 py-3">
                     [{r.team.join(", ")}]
                   </td>
-                  <td className="px-4 py-3 font-bold text-gray-900">
+                  <td className="px-4 py-3 font-bold text-white">
                     {Math.round(r.score * 100) / 100}
                     {r.score === bestScore && (
-                      <span className="ml-2 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                      <span className="theme-chip-success ml-2">
                         Most Accurate
                       </span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-gray-700">
+                  <td className="theme-mono px-4 py-3">
                     {r.runtimeMs} ms
                     {r.runtimeMs === fastestTime && (
-                      <span className="ml-2 rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                      <span className="theme-chip-info ml-2">
                         Fastest
                       </span>
                     )}
