@@ -3,6 +3,7 @@ import { loadGraph } from "../api/matchmaking";
 import type { Edge } from "../types/matchmaking";
 import { useGraph } from "../context/GraphContext";
 import HelpAccordion from "../components/HelpAccordion";
+import { getPlayerName } from "../utils/playerNames";
 
 export default function GraphBuilder() {
   const { edges, setEdges, status, setStatus } = useGraph();
@@ -145,7 +146,7 @@ export default function GraphBuilder() {
               <thead>
                 <tr className="text-left">
                   <th className="py-2">Algorithm</th>
-                  <th className="py-2">Subsets</th>
+                  <th className="py-2">Time Complexity Of Subsets</th>
                   <th className="py-2">Estimate</th>
                 </tr>
               </thead>
@@ -210,8 +211,8 @@ export default function GraphBuilder() {
             <tbody>
               {edges.map((edge, i) => (
                 <tr key={i} className="theme-divider border-b">
-                  <td className="px-5 py-2">{edge.p1}</td>
-                  <td className="px-5 py-2">{edge.p2}</td>
+                  <td className="px-5 py-2">{getPlayerName(edge.p1)}</td>
+                  <td className="px-5 py-2">{getPlayerName(edge.p2)}</td>
                   <td className="theme-mono px-5 py-2">{edge.score}</td>
                   <td className="px-5 py-2">
                     <button

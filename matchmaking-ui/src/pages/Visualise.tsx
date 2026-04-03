@@ -6,6 +6,12 @@ import HelpAccordion from "../components/HelpAccordion";
 import { ALGORITHMS } from "../constants/algorithms";
 import { parseTeamInput } from "../utils/parseTeamInput";
 import { useGraph } from "../context/GraphContext";
+import {
+  extractPlayerIdFromAction,
+  formatPlayerAction,
+  formatPlayerList,
+  getPlayerName,
+} from "../utils/playerNames";
 
 /** Lay nodes evenly around a circle. */
 function circularLayout(nodeIds: number[], cx: number, cy: number, radius: number) {
@@ -22,7 +28,7 @@ function circularLayout(nodeIds: number[], cx: number, cy: number, radius: numbe
 
 export default function Visualise() {
   const { apiEdges: edges, allPlayers, refreshGraph } = useGraph();
-  const [algorithm, setAlgorithm] = useState("localSearchFirst");
+  const [algorithm, setAlgorithm] = useState<string>("localSearchFirst");
   const [initialTeam, setInitialTeam] = useState("");
   const [result, setResult] = useState<StepsResult | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,6 +36,9 @@ export default function Visualise() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const inputExample = [allPlayers[0] ?? 0, allPlayers[1] ?? 5]
+    .map(getPlayerName)
+    .join(", ");
 
   // Auto-play timer
   useEffect(() => {
@@ -56,20 +65,24 @@ export default function Visualise() {
     setCurrentStep(0);
     setPlaying(false);
 
-    const team = parseTeamInput(initialTeam);
-
     try {
+      const team = parseTeamInput(initialTeam, allPlayers);
       await refreshGraph();
       const res = await runWithSteps({ algorithm, initialTeam: team });
       setResult(res);
-    } catch {
-      setError("Failed to run. Is the API running? Did you load a graph first?");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to run. Is the API running? Did you load a graph first?");
+      }
     } finally {
       setLoading(false);
     }
   }
 
   const step: Step | null = result ? result.steps[currentStep] : null;
+  const movedId = step ? extractPlayerIdFromAction(step.action) : null;
   const positions = allPlayers.length > 0
     ? circularLayout(allPlayers, 350, 300, 240)
     : {};
@@ -127,8 +140,8 @@ export default function Visualise() {
             type="text"
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
-            placeholder="e.g. 0, 5"
-            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
+            placeholder={`e.g. ${inputExample}`}
+            className="theme-input mt-2 w-48 rounded-lg px-3 py-2 text-sm"
           />
         </div>
         <button
@@ -156,10 +169,7 @@ export default function Visualise() {
                 const p1InT1 = step.team.includes(edge.p1);
                 const p2InT1 = step.team.includes(edge.p2);
                 const isCrossTeam = p1InT1 !== p2InT1;
-                // Find which player just moved (compare action text)
-                const movedPlayer = step.action.match(/player (\d+)/);
-                const movedId = movedPlayer ? Number(movedPlayer[1]) : -1;
-                const involvesMovedPlayer = edge.p1 === movedId || edge.p2 === movedId;
+                const involvesMovedPlayer = movedId !== null && (edge.p1 === movedId || edge.p2 === movedId);
                 // Position the weight label on the outside of the ring, near the other node
                 const otherNode = edge.p1 === movedId ? p2 : p1;
                 // Direction from center of ring outward through the other node
@@ -200,12 +210,11 @@ export default function Visualise() {
                 if (!pos) return null;
                 const inTeam1 = step.team.includes(id);
                 const inTeam2 = step.opposingTeam.includes(id);
-                const movedPlayer = step.action.match(/player (\d+)/);
-                const movedId = movedPlayer ? Number(movedPlayer[1]) : -1;
                 const isMovedNode = id === movedId;
                 const fill = inTeam1 ? "#3b82f6" : inTeam2 ? "#ef4444" : "#9ca3af";
                 return (
                   <g key={id}>
+                    <title>{getPlayerName(id)}</title>
                     {isMovedNode && (
                       <circle
                         cx={pos.x} cy={pos.y} r={28}
@@ -224,9 +233,9 @@ export default function Visualise() {
                       textAnchor="middle"
                       dominantBaseline="middle"
                       className="fill-white font-bold select-none"
-                      fontSize={14}
+                      fontSize={10}
                     >
-                      {id}
+                      {getPlayerName(id)}
                     </text>
                   </g>
                 );
@@ -324,16 +333,16 @@ export default function Visualise() {
             <div className="theme-panel-subtle space-y-3 rounded-xl p-4">
               <div>
                 <span className="theme-label">Action</span>
-                <p className="mt-2 text-lg font-semibold text-white">{step.action}</p>
+                <p className="mt-2 text-lg font-semibold text-white">{formatPlayerAction(step.action)}</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <span className="theme-label">Team 1 (Blue)</span>
-                  <p className="theme-mono mt-2 text-sm text-sky-100">[{step.team.join(", ")}]</p>
+                  <p className="mt-2 text-sm text-sky-100">{formatPlayerList(step.team)}</p>
                 </div>
                 <div>
                   <span className="theme-label">Team 2 (Red)</span>
-                  <p className="theme-mono mt-2 text-sm text-rose-100">[{step.opposingTeam.join(", ")}]</p>
+                  <p className="mt-2 text-sm text-rose-100">{formatPlayerList(step.opposingTeam)}</p>
                 </div>
               </div>
               <div>
@@ -364,7 +373,7 @@ export default function Visualise() {
                       }`}
                     >
                       <td className="theme-note px-3 py-2">{i}</td>
-                      <td className="px-3 py-2">{s.action}</td>
+                      <td className="px-3 py-2">{formatPlayerAction(s.action)}</td>
                       <td className="theme-mono px-3 py-2 text-right text-white">
                         {Math.round(s.score * 100) / 100}
                       </td>

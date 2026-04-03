@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getPlayerName } from "../utils/playerNames";
 
 const workflowCards = [
   {
@@ -209,10 +210,10 @@ export default function Landing() {
                       textAnchor="middle"
                       dominantBaseline="middle"
                       fill="white"
-                      fontSize="13"
+                      fontSize="9"
                       fontWeight="700"
                     >
-                      {node.id}
+                      {getPlayerName(node.id)}
                     </text>
                   </g>
                 ))}

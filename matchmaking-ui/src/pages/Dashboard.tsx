@@ -4,10 +4,13 @@ import type { MatchmakingResult } from "../types/matchmaking";
 import GraphStatus from "../components/GraphStatus";
 import HelpAccordion from "../components/HelpAccordion";
 import { ALGORITHMS } from "../constants/algorithms";
+import { useGraph } from "../context/GraphContext";
 import { parseTeamInput } from "../utils/parseTeamInput";
+import { formatPlayerList, getPlayerName } from "../utils/playerNames";
 
 export default function Dashboard() {
-  const [algorithm, setAlgorithm] = useState(ALGORITHMS[0].value);
+  const { allPlayers } = useGraph();
+  const [algorithm, setAlgorithm] = useState<string>(ALGORITHMS[0].value);
   const [initialTeam, setInitialTeam] = useState("");
   const [result, setResult] = useState<MatchmakingResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -15,24 +18,27 @@ export default function Dashboard() {
 
   // AbortController lets us cancel an in-flight fetch request
   const abortControllerRef = useRef<AbortController | null>(null);
+  const inputExample = [allPlayers[0] ?? 0, allPlayers[1] ?? 5]
+    .map(getPlayerName)
+    .join(", ");
 
   async function handleRun() {
     setLoading(true);
     setError("");
     setResult(null);
 
-    // Create a new AbortController for this request
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
-
-    const team = parseTeamInput(initialTeam);
-
     try {
+      const team = parseTeamInput(initialTeam, allPlayers);
+      // Create a new AbortController for this request
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
       const res = await runAlgorithm({ algorithm, initialTeam: team }, controller.signal);
       setResult(res);
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") {
         setError("Request cancelled.");
+      } else if (err instanceof Error) {
+        setError(err.message);
       } else {
         setError("Failed to run algorithm. Is the API running? Did you load a graph first?");
       }
@@ -118,8 +124,8 @@ export default function Dashboard() {
             type="text"
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
-            placeholder="e.g. 0, 5"
-            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
+            placeholder={`e.g. ${inputExample}`}
+            className="theme-input mt-2 w-48 rounded-lg px-3 py-2 text-sm"
           />
         </div>
 
@@ -163,11 +169,17 @@ export default function Dashboard() {
           <h2 className="theme-section-title">
             {ALGORITHMS.find((a) => a.value === result.algorithm)?.label ?? result.algorithm}
           </h2>
-          <div className="mt-4 grid grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div>
-              <p className="theme-label">Team</p>
-              <p className="theme-mono mt-2 text-xl font-bold text-white">
-                [{result.team.join(", ")}]
+              <p className="theme-label">Team 1 ({result.team.length})</p>
+              <p className="mt-2 text-lg font-bold text-white">
+                {formatPlayerList(result.team)}
+              </p>
+            </div>
+            <div>
+              <p className="theme-label">Team 2 ({result.opposingTeam.length})</p>
+              <p className="mt-2 text-lg font-bold text-white">
+                {formatPlayerList(result.opposingTeam)}
               </p>
             </div>
             <div>

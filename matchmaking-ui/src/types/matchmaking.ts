@@ -18,6 +18,7 @@ export interface MatchmakingRequest {
 export interface MatchmakingResult {
   algorithm: string;
   team: number[];
+  opposingTeam: number[];
   score: number;
   runtimeMs: number;
 }

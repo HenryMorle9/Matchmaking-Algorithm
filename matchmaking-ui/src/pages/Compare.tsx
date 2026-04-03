@@ -4,29 +4,38 @@ import type { MatchmakingResult } from "../types/matchmaking";
 import GraphStatus from "../components/GraphStatus";
 import HelpAccordion from "../components/HelpAccordion";
 import { ALGORITHM_LABELS } from "../constants/algorithms";
+import { useGraph } from "../context/GraphContext";
 import { parseTeamInput } from "../utils/parseTeamInput";
+import { formatPlayerList, getPlayerName } from "../utils/playerNames";
 
 export default function Compare() {
+  const { allPlayers } = useGraph();
   const [initialTeam, setInitialTeam] = useState("");
   const [results, setResults] = useState<MatchmakingResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const inputExample = [allPlayers[0] ?? 0, allPlayers[1] ?? 5]
+    .map(getPlayerName)
+    .join(", ");
 
   async function handleCompare() {
     setLoading(true);
     setError("");
     setResults([]);
 
-    const team = parseTeamInput(initialTeam);
-
     try {
+      const team = parseTeamInput(initialTeam, allPlayers);
       const res = await compareAlgorithms({
         algorithm: "compare",
         initialTeam: team,
       });
       setResults(res);
-    } catch {
-      setError("Failed to compare. Is the API running? Did you load a graph first?");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to compare. Is the API running? Did you load a graph first?");
+      }
     } finally {
       setLoading(false);
     }
@@ -83,8 +92,8 @@ export default function Compare() {
             type="text"
             value={initialTeam}
             onChange={(e) => setInitialTeam(e.target.value)}
-            placeholder="e.g. 0, 5"
-            className="theme-input theme-mono mt-2 w-40 rounded-lg px-3 py-2 text-sm"
+            placeholder={`e.g. ${inputExample}`}
+            className="theme-input mt-2 w-48 rounded-lg px-3 py-2 text-sm"
           />
         </div>
         <button
@@ -116,7 +125,8 @@ export default function Compare() {
             <thead className="theme-card-header">
               <tr>
                 <th className="px-4 py-3">Algorithm</th>
-                <th className="px-4 py-3">Team</th>
+                <th className="px-4 py-3">Team 1</th>
+                <th className="px-4 py-3">Team 2</th>
                 <th className="px-4 py-3">Score</th>
                 <th className="px-4 py-3">Runtime</th>
               </tr>
@@ -130,8 +140,13 @@ export default function Compare() {
                   <td className="px-4 py-3 font-medium text-white">
                     {ALGORITHM_LABELS[r.algorithm] ?? r.algorithm}
                   </td>
-                  <td className="theme-mono px-4 py-3">
-                    [{r.team.join(", ")}]
+                  <td className="px-4 py-3">
+                    <p className="theme-label">({r.team.length} players)</p>
+                    <p className="mt-1">{formatPlayerList(r.team)}</p>
+                  </td>
+                  <td className="px-4 py-3">
+                    <p className="theme-label">({r.opposingTeam.length} players)</p>
+                    <p className="mt-1">{formatPlayerList(r.opposingTeam)}</p>
                   </td>
                   <td className="px-4 py-3 font-bold text-white">
                     {Math.round(r.score * 100) / 100}
