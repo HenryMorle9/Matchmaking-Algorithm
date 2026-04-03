@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { compareAlgorithms } from "../api/matchmaking";
 import type { MatchmakingResult } from "../types/matchmaking";
+import GraphStatus from "../components/GraphStatus";
 
 const ALGORITHM_LABELS: Record<string, string> = {
   localSearchFirst: "Local Search (First)",
@@ -54,6 +55,35 @@ export default function Compare() {
         Run all three algorithms on the same graph and compare results side by
         side.
       </p>
+
+      <GraphStatus />
+
+      {/* How does this work? */}
+      <details className="theme-panel-subtle rounded-xl px-5 py-4">
+        <summary className="theme-label cursor-pointer select-none text-sm font-semibold">
+          How does this work?
+        </summary>
+        <div className="mt-4 space-y-3 text-sm leading-relaxed">
+          <div>
+            <p className="font-semibold text-white">What is this?</p>
+            <p className="theme-note mt-1">
+              This page runs all three algorithms on the same graph and shows you how they compare. You'll see which one found the best team split (Most Accurate) and which one was quickest (Fastest).
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Why do scores differ?</p>
+            <p className="theme-note mt-1">
+              Local Search algorithms take shortcuts — they're fast but can get stuck on a "good enough" answer. The Exhaustive algorithm checks everything and always finds the best answer, but takes much longer.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Tip</p>
+            <p className="theme-note mt-1">
+              This is the best page to demonstrate the trade-off between speed and accuracy.
+            </p>
+          </div>
+        </div>
+      </details>
 
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end">

@@ -1,4 +1,5 @@
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import { GraphProvider } from "./context/GraphContext";
 import Compare from "./pages/Compare";
 import Dashboard from "./pages/Dashboard";
 import GraphBuilder from "./pages/GraphBuilder";
@@ -75,7 +76,9 @@ function AppFrame() {
 function App() {
   return (
     <BrowserRouter>
-      <AppFrame />
+      <GraphProvider>
+        <AppFrame />
+      </GraphProvider>
     </BrowserRouter>
   );
 }

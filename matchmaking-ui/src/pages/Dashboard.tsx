@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { runAlgorithm } from "../api/matchmaking";
 import type { MatchmakingResult } from "../types/matchmaking";
+import GraphStatus from "../components/GraphStatus";
 
 const ALGORITHMS = [
   { value: "localSearchFirst", label: "Local Search (First Improvement)" },
@@ -59,6 +60,46 @@ export default function Dashboard() {
         Pick an algorithm, set an optional starting team, and run it against
         your loaded graph.
       </p>
+
+      <GraphStatus />
+
+      {/* How does this work? */}
+      <details className="theme-panel-subtle rounded-xl px-5 py-4">
+        <summary className="theme-label cursor-pointer select-none text-sm font-semibold">
+          How does this work?
+        </summary>
+        <div className="mt-4 space-y-4 text-sm leading-relaxed">
+          <div>
+            <p className="font-semibold text-white">What is this?</p>
+            <p className="theme-note mt-1">
+              This page runs a single matchmaking algorithm to split your players into two balanced teams. The goal is to put players with high synergy on opposite teams, creating the most competitive match possible.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">The Algorithms</p>
+            <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="theme-panel rounded-lg p-3">
+                <p className="font-semibold text-sky-300">Local Search (First)</p>
+                <p className="theme-note mt-1">Tries swapping one player at a time. Takes the first swap that improves the score. Fast but may miss the best answer.</p>
+              </div>
+              <div className="theme-panel rounded-lg p-3">
+                <p className="font-semibold text-sky-300">Local Search (Best)</p>
+                <p className="theme-note mt-1">Also swaps one player at a time, but checks every possible swap and picks the best one each round. Slower but smarter.</p>
+              </div>
+              <div className="theme-panel rounded-lg p-3">
+                <p className="font-semibold text-sky-300">Guaranteed Best (Exhaustive)</p>
+                <p className="theme-note mt-1">Checks every possible team combination to find the absolute best split. Perfect results, but gets very slow with more than ~20 players.</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Tip</p>
+            <p className="theme-note mt-1">
+              The "Initial Team" field lets you choose which players start on Team 1. Try different starting teams with Local Search to see how the starting point affects the result.
+            </p>
+          </div>
+        </div>
+      </details>
 
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end">

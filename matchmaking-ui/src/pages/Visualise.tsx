@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { runWithSteps } from "../api/matchmaking";
 import type { Step, StepsResult, Edge } from "../types/matchmaking";
+import GraphStatus from "../components/GraphStatus";
 
 const ALGORITHM_OPTIONS = [
   { value: "localSearchFirst", label: "Local Search (First)" },
@@ -121,6 +122,35 @@ export default function Visualise() {
       <p className="theme-subtitle mt-3">
         Watch how local search algorithms explore team splits move by move.
       </p>
+
+      <GraphStatus />
+
+      {/* How does this work? */}
+      <details className="theme-panel-subtle rounded-xl px-5 py-4">
+        <summary className="theme-label cursor-pointer select-none text-sm font-semibold">
+          How does this work?
+        </summary>
+        <div className="mt-4 space-y-3 text-sm leading-relaxed">
+          <div>
+            <p className="font-semibold text-white">What is this?</p>
+            <p className="theme-note mt-1">
+              This page replays how an algorithm builds its team split, move by move. Blue nodes are Team 1, red nodes are Team 2. Watch as players get swapped between teams to improve the overall match balance.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Reading the graph</p>
+            <p className="theme-note mt-1">
+              Lines between players represent how well they've played together. The algorithm tries to put strongly-connected players on opposite teams. Gold highlighted lines show the connections affected by the current move.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Tip</p>
+            <p className="theme-note mt-1">
+              Click any row in the step history table to jump to that step. The Exhaustive algorithm only shows 2 steps (start → end) because it doesn't make incremental moves.
+            </p>
+          </div>
+        </div>
+      </details>
 
       {/* Controls */}
       <div className="mt-6 flex gap-4 items-end flex-wrap">

@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { loadGraph } from "../api/matchmaking";
 import type { Edge } from "../types/matchmaking";
+import { useGraph } from "../context/GraphContext";
 
 export default function GraphBuilder() {
-  // List of edges (local state, not sent to API yet)
-  const [edges, setEdges] = useState<Edge[]>([]);
-
-  // Status message shown after loading graph
-  const [status, setStatus] = useState("");
+  const { edges, setEdges, status, setStatus } = useGraph();
 
   // Player count for random generation
   const [playerCount, setPlayerCount] = useState("7");
@@ -67,6 +64,33 @@ export default function GraphBuilder() {
           into the API.
         </p>
       </div>
+
+      {/* How does this work? */}
+      <details className="theme-panel-subtle rounded-xl px-5 py-4">
+        <summary className="theme-label cursor-pointer select-none text-sm font-semibold">
+          How does this work?
+        </summary>
+        <div className="mt-4 space-y-3 text-sm leading-relaxed">
+          <div>
+            <p className="font-semibold text-white">What is this?</p>
+            <p className="theme-note mt-1">
+              This page creates a network of players with compatibility scores. Think of it like a social network — each connection between two players has a number showing how well they play together. The higher the number, the better the pairing.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">How to use</p>
+            <p className="theme-note mt-1">
+              Pick how many players you want, hit Generate Random, then click Load Graph to send it to the matchmaking engine. The other pages (Dashboard, Compare, Visualise) all use this loaded graph.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-white">Tip</p>
+            <p className="theme-note mt-1">
+              Start with 7 players to see results instantly. Above 20 players, the exhaustive algorithm will take noticeably longer.
+            </p>
+          </div>
+        </div>
+      </details>
 
       {/* Generate random graph */}
       <div className="theme-panel rounded-xl p-5">
