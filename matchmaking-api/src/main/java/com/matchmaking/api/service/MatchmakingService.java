@@ -109,10 +109,17 @@ public class MatchmakingService {
         for (int i = 0; i < rawSteps.size(); i++) {
             List<Integer> teamIds = rawSteps.get(i);
             Team team = toTeam(teamIds);
-            TeamResultDto snapshot = buildResult(request.getAlgorithm(), team, 0);
+            Team opposing = teamChoose.otherTeam(team);
+            double score = teamChoose.multiPlayerTeamScore(team);
 
             String action = (i == 0) ? "Initial team" : describeMove(previousTeam, teamIds);
-            steps.add(new StepDto(i, snapshot.getTeam(), snapshot.getOpposingTeam(), snapshot.getScore(), action));
+            steps.add(new StepDto(
+                    i,
+                    new ArrayList<>(team),
+                    new ArrayList<>(opposing),
+                    score,
+                    action
+            ));
             previousTeam = teamIds;
         }
 

@@ -70,6 +70,7 @@ export default function Visualise() {
       await refreshGraph();
       const res = await runWithSteps({ algorithm, initialTeam: team });
       setResult(res);
+      setCurrentStep(res.algorithm === "guaranteedBestTeam" ? res.steps.length - 1 : 0);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

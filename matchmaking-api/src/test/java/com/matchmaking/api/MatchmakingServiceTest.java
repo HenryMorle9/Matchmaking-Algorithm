@@ -139,6 +139,20 @@ class MatchmakingServiceTest {
     }
 
     @Test
+    @DisplayName("Guaranteed Best initial step keeps Team 1 empty and Team 2 populated")
+    void stepsGuaranteedBest_initialStepShowsComplementaryTeam() {
+        RunRequestDto req = new RunRequestDto();
+        req.setAlgorithm("guaranteedBestTeam");
+        req.setInitialTeam(List.of());
+
+        StepsResultDto result = service.runWithSteps(req);
+
+        StepDto initialStep = result.getSteps().get(0);
+        assertTrue(initialStep.getTeam().isEmpty());
+        assertEquals(7, initialStep.getOpposingTeam().size());
+    }
+
+    @Test
     @DisplayName("Steps scores never decrease")
     void stepsScores_neverDecrease() {
         RunRequestDto req = new RunRequestDto();
