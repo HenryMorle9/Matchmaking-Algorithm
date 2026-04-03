@@ -45,10 +45,12 @@ class MatchmakingApiTest {
 
     @Test
     @Order(1)
-    @DisplayName("GET /graph before loading returns 404")
-    void getGraph_beforeLoading_returns404() throws Exception {
+    @DisplayName("GET /graph before loading returns 200 with empty edges")
+    void getGraph_beforeLoading_returnsEmptyEdges() throws Exception {
         mockMvc.perform(get("/api/graph"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.edges").isArray())
+                .andExpect(jsonPath("$.edges.length()").value(0));
     }
 
     @Test

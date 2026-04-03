@@ -1,10 +1,17 @@
 package com.matchmaking.api.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
 import com.matchmaking.api.dto.GraphInputDto;
 import com.matchmaking.api.service.MatchmakingService;
+
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * Handles loading and retrieving the player graph.
@@ -33,7 +40,7 @@ public class GraphController {
     @GetMapping
     public ResponseEntity<GraphInputDto> getGraph() {
         if (!matchmakingService.isGraphLoaded()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new GraphInputDto(List.of()));
         }
         return ResponseEntity.ok(matchmakingService.getGraph());
     }
