@@ -1,15 +1,10 @@
 import { useState } from "react";
-import { loadGraph } from "../api/matchmaking";
-import type { Edge } from "../types/matchmaking";
+import { loadGraph } from "../../api/matchmaking";
+import type { Edge } from "../../types/matchmaking";
 
-export default function GraphBuilder() {
-  // List of edges (local state, not sent to API yet)
+export default function GraphBuilderSection() {
   const [edges, setEdges] = useState<Edge[]>([]);
-
-  // Status message shown after loading graph
   const [status, setStatus] = useState("");
-
-  // Player count for random generation
   const [playerCount, setPlayerCount] = useState("7");
 
   const statusClass = status
@@ -58,16 +53,7 @@ export default function GraphBuilder() {
   }
 
   return (
-    <div className="theme-page space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="theme-title">Graph Builder</h1>
-        <p className="theme-subtitle mt-3">
-          Generate a random player graph with compatibility scores, then load it
-          into the API.
-        </p>
-      </div>
-
+    <div className="space-y-6">
       {/* Generate random graph */}
       <div className="theme-panel rounded-xl p-5">
         <h2 className="theme-section-title mb-3">Generate Graph</h2>
@@ -90,11 +76,9 @@ export default function GraphBuilder() {
         </div>
       </div>
 
-      {/* Performance estimate, Load button, and status — above the table */}
+      {/* Performance estimate */}
       {edges.length > 0 && (() => {
         const uniquePlayers = new Set(edges.flatMap((e) => [e.p1, e.p2])).size;
-
-        // Calibrated: 2^20 subsets took ~5s on local machine → ~200k/sec
         const SUBSETS_PER_SECOND = 200_000;
         const totalSubsets = 2 ** uniquePlayers;
         const estimatedSeconds = totalSubsets / SUBSETS_PER_SECOND;
@@ -170,7 +154,7 @@ export default function GraphBuilder() {
         </div>
       )}
 
-      {/* Edge list table */}
+      {/* Edge list table — scrollable after ~15 rows */}
       {edges.length > 0 && (
         <div className="theme-panel overflow-hidden rounded-xl">
           <div className="theme-card-header theme-divider border-b px-5 py-3">
@@ -178,33 +162,35 @@ export default function GraphBuilder() {
               Edges ({edges.length})
             </h2>
           </div>
-          <table className="theme-table w-full text-left text-sm">
-            <thead>
-              <tr className="theme-card-header theme-divider border-b">
-                <th className="px-5 py-3">Player 1</th>
-                <th className="px-5 py-3">Player 2</th>
-                <th className="px-5 py-3">Past Performance Score</th>
-                <th className="px-5 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {edges.map((edge, i) => (
-                <tr key={i} className="theme-divider border-b">
-                  <td className="px-5 py-2">{edge.p1}</td>
-                  <td className="px-5 py-2">{edge.p2}</td>
-                  <td className="theme-mono px-5 py-2">{edge.score}</td>
-                  <td className="px-5 py-2">
-                    <button
-                      onClick={() => handleRemoveEdge(i)}
-                      className="theme-btn-danger px-3 py-1.5 text-xs"
-                    >
-                      Remove
-                    </button>
-                  </td>
+          <div className="max-h-[600px] overflow-y-auto">
+            <table className="theme-table w-full text-left text-sm">
+              <thead className="sticky top-0 z-10 theme-card-header">
+                <tr className="theme-divider border-b">
+                  <th className="px-5 py-3">Player 1</th>
+                  <th className="px-5 py-3">Player 2</th>
+                  <th className="px-5 py-3">Past Performance Score</th>
+                  <th className="px-5 py-3"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {edges.map((edge, i) => (
+                  <tr key={i} className="theme-divider border-b">
+                    <td className="px-5 py-2">{edge.p1}</td>
+                    <td className="px-5 py-2">{edge.p2}</td>
+                    <td className="theme-mono px-5 py-2">{edge.score}</td>
+                    <td className="px-5 py-2">
+                      <button
+                        onClick={() => handleRemoveEdge(i)}
+                        className="theme-btn-danger px-3 py-1.5 text-xs"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

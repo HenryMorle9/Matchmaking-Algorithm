@@ -3,6 +3,7 @@ import Compare from "./pages/Compare";
 import Dashboard from "./pages/Dashboard";
 import GraphBuilder from "./pages/GraphBuilder";
 import Landing from "./pages/Landing";
+import Sandbox from "./pages/Sandbox";
 import Visualise from "./pages/Visualise";
 
 function AppFrame() {
@@ -64,6 +65,7 @@ function AppFrame() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/visualise" element={<Visualise />} />
+          <Route path="/sandbox" element={<Sandbox />} />
         </Routes>
       </main>
     </div>
