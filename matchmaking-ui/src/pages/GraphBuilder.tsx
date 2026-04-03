@@ -71,7 +71,7 @@ export default function GraphBuilder() {
         <div>
           <p className="font-semibold text-white">What is this?</p>
           <p className="theme-note mt-1">
-            This page creates a network of players with compatibility scores. Think of it like a social network — each connection between two players has a number showing how well they play together. The higher the number, the better the pairing.
+            This page creates a network of players with compatibility scores. Think of it like a social network. Each connection between two players has a number showing how well they play together. The higher the number, the better the pairing.
           </p>
         </div>
         <div>

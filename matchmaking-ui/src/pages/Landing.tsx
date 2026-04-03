@@ -309,12 +309,7 @@ export default function Landing() {
               </div>
             ))}
           </div>
-          <div className="theme-panel-subtle mt-6 rounded-[22px] p-5">
-            <p className="theme-label">Why It Matters</p>
-            <p className="theme-note mt-3 text-sm leading-7">
-              MatchMatrix makes the tradeoff between speed and optimality visible — demonstrating data structures, algorithm design, and measured outcomes in one coherent product.
-            </p>
-          </div>
+
         </div>
       </section>
 
