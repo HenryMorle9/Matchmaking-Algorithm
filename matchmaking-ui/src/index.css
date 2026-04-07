@@ -108,17 +108,19 @@ body {
 }
 
 .broadcast-theme {
-  --color-bg-base: #fffef9;
-  --color-bg-surface: #ffffff;
-  --color-bg-elevated: #f5f0e3;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-bg-base: #fcf8ef;
+  --color-bg-surface: #fffdfa;
+  --color-bg-elevated: #f7f1e5;
+  --color-border: rgba(56, 42, 18, 0.14);
+  --color-border-subtle: rgba(56, 42, 18, 0.09);
   --color-text-primary: #1a1a1a;
   --color-text-secondary: #2f2f2f;
   --color-text-muted: #63584c;
-  --color-accent: #14aa49;
-  --color-accent-hover: #15c450;
-  --color-accent-muted: rgba(26, 224, 95, 0.1);
+  --color-accent: #129a42;
+  --color-accent-hover: #0f8738;
+  --color-accent-muted: rgba(18, 154, 66, 0.12);
+  --color-shadow-soft: rgba(51, 36, 12, 0.04);
+  --color-shadow-subtle: rgba(51, 36, 12, 0.025);
   --color-team-1: #3488aa;
   --color-team-1-ink: #245e76;
   --color-team-1-soft: rgba(52, 136, 170, 0.11);
@@ -261,21 +263,73 @@ body {
   color: var(--color-team-2-ink);
 }
 
+.broadcast-theme .theme-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--color-border-subtle);
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.broadcast-theme .theme-help {
+  border: 1px solid var(--color-border-subtle);
+  background: transparent;
+}
+
+.broadcast-theme .theme-help[open] {
+  background: var(--color-bg-elevated);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 20px var(--color-shadow-subtle);
+}
+
+.broadcast-theme .theme-help-content {
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: 1rem;
+}
+
+.broadcast-theme .theme-help-copy {
+  max-width: 72ch;
+  color: var(--color-text-secondary);
+}
+
+.broadcast-theme .theme-help-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.broadcast-theme .theme-help-list strong {
+  color: var(--color-text-primary);
+}
+
 /* ── Panels ────────────────────────────────────────────── */
 
 .broadcast-theme .theme-panel {
   border: 1px solid var(--color-border);
   background: var(--color-bg-surface);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.72),
+    0 12px 28px var(--color-shadow-soft);
 }
 
 .broadcast-theme .theme-panel-subtle {
   border: 1px solid var(--color-border-subtle);
-  background: var(--color-bg-base);
+  background: var(--color-bg-elevated);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 20px var(--color-shadow-subtle);
+}
+
+.broadcast-theme details.theme-panel-subtle[open] {
+  border-color: rgba(18, 154, 66, 0.16);
 }
 
 .broadcast-theme .theme-card-header {
   border-bottom: 1px solid var(--color-border-subtle);
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(56, 42, 18, 0.045);
 }
 
 .broadcast-theme .theme-divider {
@@ -320,33 +374,43 @@ body {
   border: none;
   background: #1a1a1a;
   color: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 10px 22px rgba(26, 26, 26, 0.1);
 }
 
 .broadcast-theme .theme-btn-primary:hover {
-  background: #333333;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #2a2a2a;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 14px 28px rgba(26, 26, 26, 0.14);
 }
 
 .broadcast-theme .theme-btn-secondary {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: transparent;
+  border: 1px solid rgba(56, 42, 18, 0.16);
+  background: rgba(255, 253, 248, 0.85);
   color: var(--color-text-primary);
 }
 
 .broadcast-theme .theme-btn-secondary:hover {
-  border-color: rgba(0, 0, 0, 0.4);
-  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(56, 42, 18, 0.28);
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .broadcast-theme .theme-btn-accent {
   border: none;
-  background: linear-gradient(135deg, #f59e0b, #facc15);
-  color: #1a1304;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  background: #1a1a1a;
+  color: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 10px 22px rgba(26, 26, 26, 0.1);
 }
 
 .broadcast-theme .theme-btn-accent:hover {
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+  background: #2a2a2a;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22),
+    0 14px 28px rgba(26, 26, 26, 0.14);
 }
 
 .broadcast-theme .theme-btn-danger {
@@ -385,7 +449,7 @@ body {
 
 .broadcast-theme .theme-loading-fill {
   background: var(--color-accent);
-  box-shadow: 0 0 12px rgba(26, 224, 95, 0.3);
+  box-shadow: 0 0 8px rgba(18, 154, 66, 0.18);
 }
 
 /* ── Tables ────────────────────────────────────────────── */
@@ -395,7 +459,7 @@ body {
 }
 
 .broadcast-theme .theme-table thead {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(56, 42, 18, 0.045);
 }
 
 .broadcast-theme .theme-table tbody tr {
@@ -403,11 +467,11 @@ body {
 }
 
 .broadcast-theme .theme-table tbody tr:hover {
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(56, 42, 18, 0.028);
 }
 
 .broadcast-theme .theme-table tbody tr.theme-row-active {
-  background: var(--color-accent-muted);
+  background: rgba(18, 154, 66, 0.12);
 }
 
 .broadcast-theme .theme-table th {
@@ -422,15 +486,15 @@ body {
 /* ── Chips / Badges ────────────────────────────────────── */
 
 .broadcast-theme .theme-chip-success {
-  border: 1px solid rgba(134, 239, 172, 0.2);
-  background: rgba(134, 239, 172, 0.08);
-  color: #86efac;
+  border: 1px solid rgba(18, 154, 66, 0.2);
+  background: rgba(18, 154, 66, 0.1);
+  color: #166534;
 }
 
 .broadcast-theme .theme-chip-info {
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  background: rgba(56, 189, 248, 0.08);
-  color: #7dd3fc;
+  border: 1px solid rgba(52, 136, 170, 0.2);
+  background: rgba(52, 136, 170, 0.1);
+  color: #245e76;
 }
 
 .broadcast-theme .theme-chip-success,
@@ -458,9 +522,9 @@ body {
 }
 
 .broadcast-theme .theme-info-banner {
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  background: rgba(245, 158, 11, 0.06);
-  color: #fbd38d;
+  border: 1px solid rgba(197, 138, 42, 0.24);
+  background: rgba(197, 138, 42, 0.08);
+  color: #9a6516;
 }
 
 /* ── Landing / Home ────────────────────────────────────── */
@@ -496,10 +560,10 @@ body {
 .broadcast-theme .theme-home-tag {
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(26, 224, 95, 0.2);
+  border: 1px solid rgba(18, 154, 66, 0.22);
   border-radius: 4px;
-  background: var(--color-accent-muted);
-  color: var(--color-accent);
+  background: rgba(18, 154, 66, 0.08);
+  color: #117a38;
   padding: 0.3rem 0.7rem;
   font-family: "Inconsolata", monospace;
   font-size: 0.68rem;

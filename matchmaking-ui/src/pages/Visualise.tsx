@@ -41,6 +41,10 @@ export default function Visualise() {
     .map(getPlayerName)
     .join(", ");
 
+  function formatScore(score: number) {
+    return new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(score);
+  }
+
   // Auto-play timer
   useEffect(() => {
     if (playing && result) {
@@ -93,9 +97,9 @@ export default function Visualise() {
     <div className="theme-page">
       <div className="animate-fade-in">
         <p className="theme-section-title">Replay</p>
-        <h1 className="theme-title mt-2">Step-by-Step Visualisation</h1>
+        <h1 className="theme-title mt-2">Replay Search</h1>
         <p className="theme-subtitle mt-3">
-          Watch how local search algorithms explore team splits move by move.
+          Step through each move and watch the split change.
         </p>
       </div>
 
@@ -105,24 +109,14 @@ export default function Visualise() {
 
       <div className="mt-4 animate-fade-in delay-2">
         <HelpAccordion>
-            <div>
-              <p className="font-semibold theme-text-primary">What is this?</p>
-              <p className="theme-note mt-1">
-                This page replays how an algorithm builds its team split, move by move. Blue nodes are Team 1, red nodes are Team 2. Watch as players get swapped between teams to improve the overall match balance.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">Reading the graph</p>
-              <p className="theme-note mt-1">
-                Lines between players represent how well they've played together. The algorithm tries to put strongly-connected players on opposite teams. Gold highlighted lines show the connections affected by the current move.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">Tip</p>
-              <p className="theme-note mt-1">
-                Click any row in the step history table to jump to that step. The Exhaustive algorithm only shows 2 steps (start → end) because it doesn't make incremental moves.
-              </p>
-            </div>
+          <p className="theme-help-copy">
+            Replay how the algorithm changes the split over time.
+          </p>
+          <ul className="theme-help-list">
+            <li><strong>Lines</strong> show synergy between players.</li>
+            <li><strong>Gold edges</strong> mark the current move.</li>
+            <li><strong>Exhaustive</strong> only shows start and end because it does not swap incrementally.</li>
+          </ul>
         </HelpAccordion>
       </div>
 
@@ -268,12 +262,9 @@ export default function Visualise() {
               <div className="theme-info-banner mt-3 rounded px-4 py-3 text-sm">
                 <p className="font-semibold">Why only 2 steps?</p>
                 <p className="mt-1">
-                  The Guaranteed Best algorithm doesn't make moves like local search.
-                  Instead, it tries <strong>every possible team combination</strong> (all
-                  2<sup>n</sup> of them) and returns the one with the highest score.
-                  There's no step-by-step decision process to visualise, only the
-                  final optimal result. With {allPlayers.length} players, it checked{" "}
-                  {(2 ** allPlayers.length).toLocaleString()} combinations to find this answer.
+                  Guaranteed Best does not make step-by-step swaps. It checks every
+                  possible team split, then returns the best one. With {allPlayers.length} players,
+                  that meant {(2 ** allPlayers.length).toLocaleString()} combinations.
                 </p>
               </div>
             )}
@@ -356,7 +347,7 @@ export default function Visualise() {
               <div>
                 <span className="theme-label">Score</span>
                 <p className="mt-2 text-2xl font-bold theme-text-primary">
-                  {Math.round(step.score * 100) / 100}
+                  {formatScore(step.score)}
                 </p>
               </div>
             </div>
@@ -383,7 +374,7 @@ export default function Visualise() {
                       <td className="theme-note px-3 py-2 font-mono">{i}</td>
                       <td className="px-3 py-2">{formatPlayerAction(s.action)}</td>
                       <td className="theme-mono px-3 py-2 text-right theme-text-primary">
-                        {Math.round(s.score * 100) / 100}
+                        {formatScore(s.score)}
                       </td>
                     </tr>
                   ))}

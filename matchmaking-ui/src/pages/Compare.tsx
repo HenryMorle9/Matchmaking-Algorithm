@@ -18,6 +18,10 @@ export default function Compare() {
     .map(getPlayerName)
     .join(", ");
 
+  function formatScore(score: number) {
+    return new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(score);
+  }
+
   async function handleCompare() {
     setLoading(true);
     setError("");
@@ -47,16 +51,17 @@ export default function Compare() {
   const fastestTime = results.length > 0
     ? Math.min(...results.map((r) => r.runtimeMs))
     : 0;
+  const bestScoreCount = results.filter((r) => r.score === bestScore).length;
+  const fastestTimeCount = results.filter((r) => r.runtimeMs === fastestTime).length;
 
 
   return (
     <div className="theme-page">
       <div className="animate-fade-in">
         <p className="theme-section-title">Benchmark</p>
-        <h1 className="theme-title mt-2">Algorithm Comparison</h1>
+        <h1 className="theme-title mt-2">Compare Algorithms</h1>
         <p className="theme-subtitle mt-3">
-          Run all three algorithms on the same graph and compare results side by
-          side.
+          Run every algorithm on the same graph and compare score against speed.
         </p>
       </div>
 
@@ -66,24 +71,13 @@ export default function Compare() {
 
       <div className="mt-4 animate-fade-in delay-1">
         <HelpAccordion>
-            <div>
-              <p className="font-semibold theme-text-primary">What is this?</p>
-              <p className="theme-note mt-1">
-                This page runs all three algorithms on the same graph and shows you how they compare. You'll see which one found the best team split (Most Accurate) and which one was quickest (Fastest).
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">Why do scores differ?</p>
-              <p className="theme-note mt-1">
-                Local Search algorithms take shortcuts. This means they're fast but can get stuck on a "good enough" answer. The Exhaustive algorithm checks everything and always finds the best answer, but takes much, much longer.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">Tip</p>
-              <p className="theme-note mt-1">
-                This is the best page to demonstrate the trade-off between speed and accuracy.
-              </p>
-            </div>
+          <p className="theme-help-copy">
+            Use this page when you want to compare speed and score on one graph.
+          </p>
+          <ul className="theme-help-list">
+            <li><strong>Local search</strong> is faster, but may stop on a good-enough answer.</li>
+            <li><strong>Exhaustive</strong> is slower, but always finds the best split.</li>
+          </ul>
         </HelpAccordion>
       </div>
 
@@ -154,8 +148,8 @@ export default function Compare() {
                     <p className="theme-team-value--2 mt-1">{formatPlayerList(r.opposingTeam)}</p>
                   </td>
                   <td className="px-4 py-3 font-bold theme-text-primary">
-                    {Math.round(r.score * 100) / 100}
-                    {r.score === bestScore && (
+                    {formatScore(r.score)}
+                    {bestScoreCount === 1 && r.score === bestScore && (
                       <span className="theme-chip-success ml-2">
                         Most Accurate
                       </span>
@@ -163,7 +157,7 @@ export default function Compare() {
                   </td>
                   <td className="theme-mono px-4 py-3">
                     {r.runtimeMs} ms
-                    {r.runtimeMs === fastestTime && (
+                    {fastestTimeCount === 1 && r.runtimeMs === fastestTime && (
                       <span className="theme-chip-info ml-2">
                         Fastest
                       </span>

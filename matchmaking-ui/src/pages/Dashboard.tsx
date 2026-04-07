@@ -21,6 +21,10 @@ export default function Dashboard() {
     .map(getPlayerName)
     .join(", ");
 
+  function formatScore(score: number) {
+    return new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(score);
+  }
+
   async function handleRun() {
     setLoading(true);
     setError("");
@@ -67,40 +71,15 @@ export default function Dashboard() {
 
       <div className="mt-4 animate-fade-in delay-2">
         <HelpAccordion>
-          <div className="space-y-4">
-            <div>
-              <p className="font-semibold theme-text-primary">What is this?</p>
-              <p className="theme-note mt-1">
-                This page runs a single matchmaking algorithm to split your players into two balanced teams. The goal is to put players with high synergy on opposite teams, creating the most competitive match possible.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">The Algorithms</p>
-              <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="theme-panel-subtle rounded p-3">
-                  <p className="theme-label">Heuristic</p>
-                  <p className="mt-1 font-semibold theme-text-primary">Local Search (First)</p>
-                  <p className="theme-note mt-1">Tries swapping one player at a time. Takes the first swap that improves the score. Fast but may miss the best answer.</p>
-                </div>
-                <div className="theme-panel-subtle rounded p-3">
-                  <p className="theme-label">Heuristic</p>
-                  <p className="mt-1 font-semibold theme-text-primary">Local Search (Best)</p>
-                  <p className="theme-note mt-1">Also swaps one player at a time, but checks every possible swap and picks the best one each round. Slower but smarter.</p>
-                </div>
-                <div className="theme-panel-subtle rounded p-3">
-                  <p className="theme-label text-amber-700">Exhaustive</p>
-                  <p className="mt-1 font-semibold theme-text-primary">Guaranteed Best</p>
-                  <p className="theme-note mt-1">Checks every possible team combination to find the absolute best split. Perfect results, but gets very slow with more than ~20 players.</p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <p className="font-semibold theme-text-primary">Tip</p>
-              <p className="theme-note mt-1">
-                The "Initial Team" field lets you choose which players start on Team 1. Try different starting teams with Local Search to see how the starting point affects the result.
-              </p>
-            </div>
-          </div>
+          <p className="theme-help-copy">
+            Run one algorithm on the loaded graph and inspect the split it produces.
+          </p>
+          <ul className="theme-help-list">
+            <li><strong>First</strong>: stops at the first better swap.</li>
+            <li><strong>Best</strong>: checks every swap before choosing.</li>
+            <li><strong>Exhaustive</strong>: finds the exact split, but slows down above about 20 players.</li>
+            <li><strong>Initial Team</strong>: only use it when you want to test a specific starting point.</li>
+          </ul>
         </HelpAccordion>
       </div>
 
@@ -191,7 +170,7 @@ export default function Dashboard() {
             </div>
             <div className="theme-panel-subtle rounded p-4">
               <p className="theme-label">Score</p>
-              <p className="mt-2 text-xl font-bold theme-text-primary">{result.score}</p>
+              <p className="mt-2 text-xl font-bold theme-text-primary">{formatScore(result.score)}</p>
             </div>
             <div className="theme-panel-subtle rounded p-4">
               <p className="theme-label">Runtime</p>

@@ -131,7 +131,7 @@ export default function Landing() {
             />
             <p className="theme-subtitle animate-fade-in delay-3">
               A technical portfolio app built on a data structures &amp; algorithms
-              foundation — load a player graph, run matchmaking algorithms, and
+              foundation. Load a player graph, run matchmaking algorithms, and
               visualise the results step by step.
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function Landing() {
               key={card.title}
               className={`theme-panel rounded p-5 animate-fade-in delay-${i + 1}`}
             >
-              <span className="text-[var(--color-accent)] font-mono text-xs font-bold opacity-50">
+              <span className="text-[var(--color-accent)] font-mono text-xs font-bold opacity-80">
                 {card.step}
               </span>
               <h3 className="mt-2 text-lg font-bold theme-text-primary">

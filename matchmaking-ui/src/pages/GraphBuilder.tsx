@@ -74,24 +74,14 @@ export default function GraphBuilder() {
       {/* How does this work? */}
       <div className="animate-fade-in delay-1">
         <HelpAccordion>
-          <div>
-            <p className="font-semibold theme-text-primary">What is this?</p>
-            <p className="theme-note mt-1">
-              This page creates a network of players with compatibility scores. Think of it like a social network. Each connection between two players has a number showing how well they play together. The higher the number, the better the pairing.
-            </p>
-          </div>
-          <div>
-            <p className="font-semibold theme-text-primary">How to use</p>
-            <p className="theme-note mt-1">
-              Pick how many players you want, hit Generate Random, then click Load Graph to send it to the matchmaking engine. The other pages (Dashboard, Compare, Visualise) all use this loaded graph.
-            </p>
-          </div>
-          <div>
-            <p className="font-semibold theme-text-primary">Tip</p>
-            <p className="theme-note mt-1">
-              Start with 7 players to see results instantly. Above 20 players, the exhaustive algorithm will take noticeably longer.
-            </p>
-          </div>
+          <p className="theme-help-copy">
+            Build a player-synergy graph here, then use it across Dashboard, Compare, and Visualise.
+          </p>
+          <ul className="theme-help-list">
+            <li><strong>Players</strong>: choose the graph size.</li>
+            <li><strong>Generate Random</strong>: create a sample graph in one click.</li>
+            <li><strong>Load Graph</strong>: send the current edges to the API.</li>
+          </ul>
         </HelpAccordion>
       </div>
 
@@ -186,7 +176,7 @@ export default function GraphBuilder() {
         <div className="flex items-center gap-4 animate-fade-in">
           <button
             onClick={handleLoadGraph}
-            className="theme-btn-accent px-6 py-2.5 text-sm"
+            className="theme-btn-primary px-6 py-2.5 text-sm"
           >
             Load Graph ({edges.length} edges)
           </button>
