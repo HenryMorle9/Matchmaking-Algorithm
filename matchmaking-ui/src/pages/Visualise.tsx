@@ -241,7 +241,7 @@ export default function Visualise() {
                       dominantBaseline="middle"
                       className="fill-white font-bold select-none"
                       fontSize={10}
-                      fontFamily="JetBrains Mono, monospace"
+                      fontFamily="Inconsolata, monospace"
                     >
                       {getPlayerName(id)}
                     </text>

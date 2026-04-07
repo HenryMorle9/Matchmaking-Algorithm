@@ -177,7 +177,7 @@ export default function Landing() {
                       fill="white"
                       fontSize="8.5"
                       fontWeight="700"
-                      fontFamily="JetBrains Mono, monospace"
+                      fontFamily="Inconsolata, monospace"
                     >
                       {getPlayerName(node.id)}
                     </text>

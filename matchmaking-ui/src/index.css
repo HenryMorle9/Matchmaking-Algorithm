@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 /* ── Keyframes ─────────────────────────────────────────── */
@@ -101,7 +101,7 @@ body {
   min-height: 100vh;
   color: var(--color-text-primary);
   background: var(--color-bg-base);
-  font-family: "Outfit", sans-serif;
+  font-family: "Inconsolata", monospace;
 }
 
 /* ── Nav ───────────────────────────────────────────────── */
@@ -121,7 +121,7 @@ body {
 
 .broadcast-theme .theme-brand {
   color: var(--color-text-primary);
-  font-family: "Outfit", sans-serif;
+  font-family: "Inconsolata", monospace;
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -137,7 +137,7 @@ body {
   justify-content: center;
   padding: 0.55rem 0.85rem;
   color: var(--color-text-muted);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -171,7 +171,7 @@ body {
 
 .broadcast-theme .theme-title {
   color: var(--color-text-primary);
-  font-family: "Outfit", sans-serif;
+  font-family: "Inconsolata", monospace;
   font-size: clamp(2.2rem, 4vw, 3.4rem);
   font-weight: 700;
   line-height: 1.1;
@@ -186,7 +186,7 @@ body {
 
 .broadcast-theme .theme-section-title {
   color: var(--color-accent);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -195,7 +195,7 @@ body {
 
 .broadcast-theme .theme-label {
   color: var(--color-text-secondary);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -252,7 +252,7 @@ body {
 .broadcast-theme .theme-btn-accent,
 .broadcast-theme .theme-btn-danger {
   border-radius: 4px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -315,7 +315,11 @@ body {
 }
 
 .broadcast-theme .theme-mono {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
+}
+
+.broadcast-theme .font-mono {
+  font-family: "Inconsolata", monospace;
 }
 
 /* ── Loading ───────────────────────────────────────────── */
@@ -353,7 +357,7 @@ body {
 
 .broadcast-theme .theme-table th {
   color: var(--color-text-muted);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -380,7 +384,7 @@ body {
   align-items: center;
   border-radius: 4px;
   padding: 0.18rem 0.58rem;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.64rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -412,7 +416,7 @@ body {
 
 .broadcast-theme .theme-kicker {
   color: var(--color-accent);
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -442,7 +446,7 @@ body {
   background: var(--color-accent-muted);
   color: var(--color-accent);
   padding: 0.3rem 0.7rem;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Inconsolata", monospace;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.12em;
