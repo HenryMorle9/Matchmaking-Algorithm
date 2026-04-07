@@ -9,7 +9,7 @@ const workflowCards = [
     step: "01",
     title: "Graph Builder",
     description:
-      "Load pairwise player synergy as a weighted graph and estimate runtime before you run.",
+      "Load pairwise player synergy as a weighted graph. The graph edges between nodes represent past player performance as a pair. ",
     cta: "Open Builder",
     to: "/graph-builder",
   },
@@ -17,7 +17,7 @@ const workflowCards = [
     step: "02",
     title: "Dashboard",
     description:
-      "Run one algorithm at a time, seed an initial team, and inspect the resulting split.",
+      "Run one algorithm at a time. Optionally, decide on an initial team, and have a look at the resulting split.",
     cta: "Run A Match",
     to: "/dashboard",
   },
@@ -25,7 +25,7 @@ const workflowCards = [
     step: "03",
     title: "Compare",
     description:
-      "Benchmark score and runtime side by side to see how local search stacks up against exhaustive search.",
+      "Benchmark score and runtime side by side to see how they all perform in comparison to one another.",
     cta: "Compare Modes",
     to: "/compare",
   },
@@ -33,7 +33,7 @@ const workflowCards = [
     step: "04",
     title: "Visualise",
     description:
-      "Replay the search step by step and see the graph evolve as players are added or removed.",
+      "Replay the matchmaking search step by step. See the graph evolve as players are added or removed until a result is reached.",
     cta: "Watch Replay",
     to: "/visualise",
   },
