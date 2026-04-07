@@ -127,7 +127,7 @@ export default function Landing() {
               prefix={HERO_PREFIX}
               suffixes={HERO_SUFFIXES}
               className="animate-fade-in delay-2 max-w-4xl text-xl font-medium leading-relaxed theme-text-primary sm:text-2xl min-h-[4.1rem] sm:min-h-[5rem]"
-              dynamicClassName="text-white"
+              dynamicClassName="text-black"
             />
             <p className="theme-subtitle animate-fade-in delay-3">
               A technical portfolio app built on a data structures &amp; algorithms
@@ -197,7 +197,7 @@ export default function Landing() {
                       cx={node.x}
                       cy={node.y}
                       r="22"
-                      fill="rgba(255,255,255,0.04)"
+                      fill="rgba(0,0,0,0.04)"
                     />
                     <circle
                       cx={node.x}

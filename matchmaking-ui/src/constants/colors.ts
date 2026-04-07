@@ -7,5 +7,5 @@ export const TEAM_COLORS = {
   neutralStroke: "#768a9e",
   highlight: "#f59e0b",
   crossTeamEdge: "#ef4444",
-  sameTeamEdge: "#1e3048",
+  sameTeamEdge: "#cbd5e1",
 } as const;
